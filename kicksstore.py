@@ -1,6 +1,6 @@
 from StringIO import StringIO
 from Crypto.Cipher import AES
-from Crypto.Cipher import PKCS1_OAEP
+from Crypto.Cipher import PKCS1_v1_5
 from Crypto.PublicKey import RSA
 from bs4 import BeautifulSoup as BS
 import base64
@@ -90,7 +90,7 @@ class KicksStore:
 				retries+=1
 		x=StringIO('-----BEGIN PUBLIC KEY-----\r\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCy/5rF+Y9jiZdYvZICOCg+C/OtHt4EqVX9L1QE\r\npnk92vDrZbCXb2wZGPJkUpfM2bpMITL0IASTyss/5/+S8YR2De+E9yzebuv6VGhV7cwnCPffdOxj\r\neL1hPEzcRx+1c20RnnubqOH6JaGx10qgaSS1DYxaCl1UurVtK5mwMDGv5wIDAQAB\r\n-----END PUBLIC KEY-----')
 		y=RSA.importKey(x)
-		z=PKCS1_OAEP.new(y)
+		z=PKCS1_v1_5.new(y)
 		w=z.encrypt((self.cardnumber+'|'+self.cardexpiry+'|'+self.cardccv+'|'+"https://kicksstore.eu").encode('ascii'))
 		carddata=base64.b64encode(w)
 		debugh=open("{0}paymentpage.html".format(debugid),'w')
